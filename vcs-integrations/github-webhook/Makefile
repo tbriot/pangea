@@ -18,7 +18,7 @@ DOCKER_TAG = latest
 # TÂCHES PRINCIPALES
 # ==============================================================================
 
-.PHONY: all run test clean docker-build docker-run docker-stop docker-clean
+.PHONY: all run test clean docker-build docker-run docker-stop docker-clean docker-scan
 
 all: run ## Lance l'application et attend les requêtes.
 
@@ -70,5 +70,11 @@ docker-clean: ## Nettoie les ressources Docker (image et conteneur).
 
 docker-logs: ## Affiche les logs du conteneur Docker.
 	docker logs -f $(DOCKER_IMAGE)
+
+docker-scan: ## Scan l'image Docker avec Trivy pour détecter les vulnérabilités.
+	@echo "--------------------------------------------------------"
+	@echo "🔍 Scan de vulnérabilités de l'image Docker $(DOCKER_IMAGE):$(DOCKER_TAG) avec Trivy..."
+	@echo "--------------------------------------------------------"
+	trivy image $(DOCKER_IMAGE):$(DOCKER_TAG)
 
 docker-dev: docker-build docker-run ## Construit et lance l'image Docker.
