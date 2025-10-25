@@ -13,6 +13,9 @@ HEADERS = -H 'Content-Type: application/json' -H 'Authorization: Bearer my-secre
 DOCKER_IMAGE = github-events-webhook
 DOCKER_TAG = latest
 
+# Amazon API Gateway
+AMZN_API_GATEWAY_URL = https://w2y8l5vnsg.execute-api.eu-west-3.amazonaws.com/test/event
+
 
 # ==============================================================================
 # TÂCHES PRINCIPALES
@@ -34,6 +37,15 @@ test: ## Exécute le test d'intégration via cURL.
 	@echo "--------------------------------------------------------"
 	@echo ""
 	@curl -iv -X POST http://127.0.0.1:8000 \
+		-H @test/01_push_event_headers \
+		-d @test/01_push_event_payload.json
+
+test-aws: ## Exécute le test d'intégration via cURL.
+	@echo "--------------------------------------------------------"
+	@echo "🧪 Exécution du test d'intégration cURL..."
+	@echo "--------------------------------------------------------"
+	@echo ""
+	@curl -iv -X POST ${AMZN_API_GATEWAY_URL} \
 		-H @test/01_push_event_headers \
 		-d @test/01_push_event_payload.json
 
