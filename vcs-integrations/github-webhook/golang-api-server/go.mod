@@ -1,4 +1,4 @@
-module github.com/tbriot/pangea/github-webhook
+module github.com/tbriot/pangea/github-webhook/golang-api-server
 
 go 1.24.4
 
